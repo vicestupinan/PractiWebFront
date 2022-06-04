@@ -1,0 +1,26 @@
+<app-menu></app-menu>
+<body class="text-center">
+    <div class="text-center" *ngIf="isLogged; else loggedOut">
+        <h2>Ya has iniciado sesión</h2>
+    </div>
+    <ng-template #loggedOut>
+        <main class="form-signin w-100 m-auto">
+            <form #f="ngForm" (ngSubmit)="onLogin()" novalidate>
+                <img class="mb-4" src="../assets/images/Universidad-San-Buenaventura.png" alt="" width="180"
+                    height="180">
+                <h1 class="h3 mb-3 fw-normal">Inicio sesion</h1>
+                <div class="form-floating">
+                    <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com"
+                        [(ngModel)]="email" required="">
+                    <label for="floatingInput">Correo electronico</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control" name="password" id="password" placeholder="name@example.com"
+                        [(ngModel)]="password" required="">
+                    <label for="floatingPassword">Contraseña</label>
+                </div>
+                <button class="w-100 btn btn-lg btn-secondary" type="submit" [disabled]="!f.valid">Ingresar</button>
+            </form>
+        </main>
+    </ng-template>
+</body>
