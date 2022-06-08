@@ -3,8 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Estudiante } from '../models/estudiante';
 import { EstudianteService } from '../services/estudiante.service';
-import { TokenService } from '../services/token.service';
-import { Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-students',
@@ -19,7 +18,13 @@ export class StudentsComponent implements OnInit {
   public page = 1;
   public pageSize = 5;
   public lenght = 0;
+  pensums = [1,2,3,4,5,6,7,8,9,10];
+  aprobacion = "";
+  motivo = "";
+  observaciones = "";
+  encargado = "";
 
+  estudianteForm : FormGroup;
   selectedFiles?: FileList;
   currentFile?: File;
   progress = 0;
@@ -27,13 +32,24 @@ export class StudentsComponent implements OnInit {
   fileInfos?: Observable<any>;
 
   constructor(
+    public fb: FormBuilder,
     private estudianteService: EstudianteService,
-    private tokenService: TokenService,
-    private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.cargarEstudiantes()
+    this.cargarEstudiantes();
+    this.estudianteForm = this.fb.group({
+      id: [''],
+      nombre: ['', Validators.required],
+      apellido: ['', Validators.required],
+      codigo: ['', Validators.required],
+      correo: ['', Validators.required],
+      periodoAspira: ['', Validators.required],
+      aprobacion: [''],
+      motivo: [''],
+      observaciones: [''],
+      encargado: [''],
+    });
   }
 
   cargarEstudiantes(): void {
@@ -88,6 +104,46 @@ export class StudentsComponent implements OnInit {
       }
       this.selectedFiles = undefined;
     }
+  }
+
+  update(estudiante: Estudiante){
+
+    if(estudiante.aprobacion==false){
+      this.aprobacion = "No aprobado";
+    }else{
+      this.aprobacion = "Aprobado";
+    }
+
+    if(estudiante.motivo===null){
+      this.motivo = "No aprobado";
+    }else{
+      this.motivo = estudiante.motivo;
+    }
+
+    if(estudiante.observaciones===null){
+      this.observaciones = "No aprobado";
+    }else{
+      this.observaciones = estudiante.observaciones;
+    }
+
+    if(estudiante.observaciones===null){
+      this.encargado = "No aprobado";
+    }else{
+      this.encargado = estudiante.encargado;
+    }
+
+    this.estudianteForm.setValue({
+      id:estudiante.id,
+      nombre: estudiante.nombre ,
+      apellido: estudiante.apellido,
+      codigo: estudiante.codigo,
+      correo: estudiante.correo,
+      periodoAspira: estudiante.periodoAspira,
+      aprobacion: this.aprobacion,
+      motivo: this.motivo,
+      observaciones: this.observaciones,
+      encargado: this.encargado,
+    })
   }
 
 }

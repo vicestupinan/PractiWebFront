@@ -1,1 +1,39 @@
-<p>register works!</p>
+<app-menu></app-menu>
+<div class="container mt-5">
+  <h2 class="text-center">Crear Usuario</h2>
+  <form #f=ngForm (ngSubmit)="register()" class="row g-3 mt-5">
+    <div class="col-md-4">
+      <label for="validationCustom01" class="form-label fw-bold">Nombre</label>
+      <input type="text" [(ngModel)]="nombre" name="nombre" class="form-control" id="validationCustom01" value="" required>
+    </div>
+    <div class="col-md-4">
+      <label for="validationCustom02" class="form-label fw-bold">Apellido</label>
+      <input type="text" [(ngModel)]="apellido" name="apellido" class="form-control" id="validationCustom02" value="" required>
+    </div>
+    <div class="col-md-4">
+      <label for="validationCustom03" class="form-label fw-bold">Codigo</label>
+      <input type="text" [(ngModel)]="codigo" name="codigo" class="form-control" id="validationCustom03" value="" required>
+    </div>
+    <div class="col-md-4">
+      <label for="validationCustom04" class="form-label fw-bold">Correo</label>
+      <input type="email" [(ngModel)]="correo" name="correo" class="form-control" id="validationCustom04" value="" required>
+    </div>
+    <div class="col-md-4">
+      <label for="validationCustom05" class="form-label fw-bold">Telefono</label>
+      <input type="text" [(ngModel)]="telefono" name="telefono" class="form-control" id="validationCustom05" value="" required>
+    </div>
+    <div class="col-md-4">
+      <label for="validationCustom06" class="form-label fw-bold">Rol</label>
+      <select class="form-select" name="rol" id="validationCustom06" required>
+        <option [ngValue]="item" *ngFor="let item of roles">{{item.rolNombre}}</option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label for="validationCustom07" class="form-label fw-bold">Contrasena</label>
+      <input type="password" [(ngModel)]="password" name="password" class="form-control" id="validationCustom07" value="" required>
+    </div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+      <button type="submit" class="btn btn-secondary" [disabled]="!f.valid">Agregar</button>
+    </div>
+  </form>
+</div>

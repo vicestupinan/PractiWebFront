@@ -34,13 +34,62 @@
         </td>
         <td>{{estudiante.periodoAspira}}</td>
         <td>
-          <button type="button" class="btn btn-link ">
+          <button type="button" class="btn btn-link" (click)="update(estudiante)">
             Editar
           </button>
         </td>
       </tr>
     </tbody>
   </table>
-  <ngb-pagination class="d-flex justify-content-center mt-3" [(page)]="page" [pageSize]="pageSize" [collectionSize]="lenght"></ngb-pagination>
+  <ngb-pagination class="d-flex justify-content-center mt-3" [(page)]="page" [pageSize]="pageSize"
+    [collectionSize]="lenght"></ngb-pagination>
 
+  <form [formGroup]="estudianteForm" class="row g-3 mt-5 mb-5">
+    <div class="col-md-4">
+      <label for="validationCustom01" class="form-label fw-bold">Nombre</label>
+      <input type="text" formControlName="nombre" class="form-control" id="validationCustom01" value="" required>
+    </div>
+    <div class="col-md-4">
+      <label for="validationCustom02" class="form-label fw-bold">Apellido</label>
+      <input type="text" formControlName="apellido" class="form-control" id="validationCustom02" value="" required>
+    </div>
+    <div class="col-md-4">
+      <label for="validationCustom03" class="form-label fw-bold">Codigo</label>
+      <input type="text" formControlName="codigo" class="form-control" id="validationCustom03" value="" required>
+    </div>
+    <div class="col-md-4">
+      <label for="validationCustom04" class="form-label fw-bold">Correo</label>
+      <input type="email" formControlName="correo" class="form-control" id="validationCustom04" value="" required>
+    </div>
+    <div class="col-md-4">
+      <label for="validationCustom05" class="form-label fw-bold">Periodo practicas</label>
+      <input type="text" formControlName="periodoAspira" class="form-control" id="validationCustom05" value="" required>
+    </div>
+    <div class="col-md-4">
+      <label for="validationCustom06" class="form-label fw-bold">Pensum</label>
+      <select class="form-select" id="validationCustom06" required>
+        <option>Seleccionar...</option>
+        <option [ngValue]="item" *ngFor="let item of pensums">{{ pensums }}</option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label for="validationCustom07" class="form-label fw-bold">Aprobacion</label>
+      <input type="text" formControlName="aprobacion" class="form-control" id="validationCustom07" aria-label="Disabled input example" readonly>
+    </div>
+    <div class="col-md-4">
+      <label for="validationCustom08" class="form-label fw-bold">Motivo</label>
+      <input type="text" formControlName="motivo" class="form-control" id="validationCustom08" aria-label="Disabled input example" readonly>
+    </div>
+    <div class="col-md-4">
+      <label for="validationCustom09" class="form-label fw-bold">Observaciones</label>
+      <input type="text" formControlName="observaciones" class="form-control" id="validationCustom09" aria-label="Disabled input example">
+    </div>
+    <div class="col-md-4">
+      <label for="validationCustom10" class="form-label fw-bold">Encargado</label>
+      <input type="text" formControlName="encargado" class="form-control" id="validationCustom10" aria-label="Disabled input example" readonly>
+    </div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+      <button type="submit" class="btn btn-secondary" [disabled]="estudianteForm.invalid">Agregar</button>
+    </div>
+  </form>
 </div>

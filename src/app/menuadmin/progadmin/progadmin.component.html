@@ -1,0 +1,61 @@
+<app-menu></app-menu>
+<div class="container mt-5">
+    <h2 class="text-center">Crear Programa</h2>
+    <form [formGroup]="programaForm" (ngSubmit)="addProg()" class="row g-3 mt-5 mb-5">
+        <div class="col-md-6">
+            <label for="validationCustom01" class="form-label fw-bold">Nombre</label>
+            <input type="text" formControlName="nombre" name="nombre" class="form-control" id="validationCustom01"
+                value="" required>
+        </div>
+        <div class="col-md-6">
+            <label for="validationCustom02" class="form-label fw-bold">Rol</label>
+            <select class="form-select" name="facultad" id="validationCustom02" required>
+              <option [ngValue]="item.id" *ngFor="let item of facultades">{{item.nombre}}</option>
+            </select>
+          </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+            <button type="submit" class="btn btn-secondary" [disabled]="programaForm.invalid">Agregar</button>
+        </div>
+    </form>
+    <table class="table align-middle mb-0 bg-white">
+        <thead class="bg-light">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let programa of programas | slice: (page-1) * pageSize: (page-1) * pageSize+pageSize" >
+                <td>
+                    <p class="fw-bold mb-1">{{programa.id}}</p>
+                </td>
+                <td>
+                    <p class="fw-bold mb-1">{{programa.nombre}}</p>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-link" (click)="update(programa)">
+                        Editar
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <ngb-pagination class="d-flex justify-content-center mt-3" [(page)]="page" [pageSize]="pageSize"
+        [collectionSize]="lenght"></ngb-pagination>
+
+        <form [formGroup]="programaEditForm" class="row g-3 mt-5 mb-5">
+            <div class="col-md-6">
+                <label for="validationCustom07" class="form-label fw-bold">ID</label>
+                <input type="text" formControlName="id" class="form-control" id="validationCustom07" aria-label="Disabled input example" readonly>
+              </div>
+            <div class="col-md-6">
+              <label for="validationCustom01" class="form-label fw-bold">Nombre</label>
+              <input type="text" formControlName="nombre" class="form-control" id="validationCustom01" value="" required>
+            </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                <button type="submit" class="btn btn-secondary" (click)="save()" [disabled]="programaEditForm.invalid">Actualizar</button>
+              </div>
+          </form>
+
+</div>

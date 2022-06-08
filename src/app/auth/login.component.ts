@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   password: string;
   roles: string[] = [];
   errMesg: string;
+  usrRol: string;
 
   constructor(
     private tokenService: TokenService,
@@ -45,7 +46,13 @@ export class LoginComponent implements OnInit {
         this.tokenService.setEmail(data.email);
         this.tokenService.setAuthorities(data.authorities);
         this.roles = data.authorities;
-        this.router.navigate(['/estudiantes']);
+        this.usrRol = JSON.stringify(this.roles[0]);
+        if(this.usrRol.includes("ROLE_ADMIN")){
+          this.router.navigate(['/menuadmin']);
+        }else if(this.usrRol.includes("ROLE_COORD")){
+          this.router.navigate(['/estudiantes']);
+        }
+
       },
       err => {
         this.isLogged = false;

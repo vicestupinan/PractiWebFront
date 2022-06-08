@@ -9,12 +9,20 @@ import { TokenService } from '../services/token.service';
 export class MenuComponent implements OnInit {
 
   isLogged = false;
+  usrAdmin = false;
+  usrCoord = false;
 
   constructor(private tokenService: TokenService) { }
 
   ngOnInit() {
     if (this.tokenService.getToken()) {
       this.isLogged = true;
+      if (this.tokenService.getAuthorities()[0] == 'ROLE_ADMIN') {
+        this.usrAdmin = true;
+      }
+      if (this.tokenService.getAuthorities()[0] == 'ROLE_COORD') {
+        this.usrCoord = true;
+      }
     } else {
       this.isLogged = false;
     }

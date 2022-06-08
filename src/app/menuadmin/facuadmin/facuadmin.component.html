@@ -1,0 +1,55 @@
+<app-menu></app-menu>
+<div class="container mt-5">
+    <h2 class="text-center">Crear Facultad</h2>
+    <form [formGroup]="facultadForm" (ngSubmit)="addFacu()" class="row g-3 mt-5 mb-5">
+        <div class="col">
+            <label for="validationCustom01" class="form-label fw-bold">Nombre</label>
+            <input type="text" formControlName="nombre" name="nombre" class="form-control" id="validationCustom01"
+                value="" required>
+        </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+            <button type="submit" class="btn btn-secondary" [disabled]="facultadForm.invalid">Agregar</button>
+        </div>
+    </form>
+    <table class="table align-middle mb-0 bg-white">
+        <thead class="bg-light">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let facultad of facultades | slice: (page-1) * pageSize: (page-1) * pageSize+pageSize" >
+                <td>
+                    <p class="fw-bold mb-1">{{facultad.id}}</p>
+                </td>
+                <td>
+                    <p class="fw-bold mb-1">{{facultad.nombre}}</p>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-link" (click)="update(facultad)">
+                        Editar
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <ngb-pagination class="d-flex justify-content-center mt-3" [(page)]="page" [pageSize]="pageSize"
+        [collectionSize]="lenght"></ngb-pagination>
+
+        <form [formGroup]="facultadEditForm" class="row g-3 mt-5 mb-5">
+            <div class="col-md-6">
+                <label for="validationCustom07" class="form-label fw-bold">ID</label>
+                <input type="text" formControlName="id" class="form-control" id="validationCustom07" aria-label="Disabled input example" readonly>
+              </div>
+            <div class="col-md-6">
+              <label for="validationCustom01" class="form-label fw-bold">Nombre</label>
+              <input type="text" formControlName="nombre" class="form-control" id="validationCustom01" value="" required>
+            </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                <button type="submit" class="btn btn-secondary" (click)="save()" [disabled]="facultadEditForm.invalid">Actualizar</button>
+              </div>
+          </form>
+
+</div>
