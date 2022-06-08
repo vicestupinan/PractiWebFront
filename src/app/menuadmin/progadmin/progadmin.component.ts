@@ -17,7 +17,6 @@ export class ProgadminComponent implements OnInit {
   programas: Programa[] = [];
   programaForm: FormGroup;
   programaEditForm: FormGroup;
-  nombre: any;
   suscription: Subscription;
 
   public lenght = 0;
@@ -46,12 +45,13 @@ export class ProgadminComponent implements OnInit {
     this.programaForm = this.fb.group({
       id: [''],
       nombre: ['', Validators.required],
-      programa: [''],
+      facultad: [''],
     });
 
     this.programaEditForm = this.fb.group({
       id: ['', Validators.required],
       nombre: ['', Validators.required],
+      facultad: [''],
     });
 
     this.suscription = this.programaService.refresh$.subscribe(() =>{
@@ -75,6 +75,7 @@ export class ProgadminComponent implements OnInit {
   addProg = (): void => {
     this.programaService.guardarPrograma(this.programaForm.value).subscribe(
       (resp) => {
+        console.log(this.programaForm.value)
         this.programaForm.reset();
         (error: any) => {
           console.error(error);
@@ -87,6 +88,7 @@ export class ProgadminComponent implements OnInit {
     this.programaEditForm.setValue({
       id:programa.id,
       nombre: programa.nombre,
+      facultad: programa.facultad
     })
   }
 

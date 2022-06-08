@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { UsuarioService } from '../services/usuario.service';
 import { RolService } from '../services/rol.service';
 import { ProgramaService } from '../services/programa.service';
@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
     public usuarioService: UsuarioService,
     private authService: AuthService,
     public rolService: RolService,
-    public programaService: ProgramaService
+    public programaService: ProgramaService,
 
   ) { }
 
@@ -49,6 +49,7 @@ export class RegisterComponent implements OnInit {
   }
 
   register(): void{
+    console.log(this.rol);
     if(JSON.stringify(this.rol).includes("ROLE_ADMIN")){
       this.rols.push("admin");
     }

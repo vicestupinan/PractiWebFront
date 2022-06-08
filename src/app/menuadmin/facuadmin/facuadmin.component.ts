@@ -14,7 +14,6 @@ export class FacuadminComponent implements OnInit {
   facultades: Facultad[] = [];
   facultadForm: FormGroup;
   facultadEditForm: FormGroup;
-  nombre: any;
   suscription: Subscription;
 
   public lenght = 0;
@@ -61,6 +60,7 @@ export class FacuadminComponent implements OnInit {
   addFacu = (): void => {
     this.facultadService.guardarFacultad(this.facultadForm.value).subscribe(
       (resp) => {
+        console.log(this.facultadForm.value)
         this.facultadForm.reset();
         (error: any) => {
           console.error(error);
