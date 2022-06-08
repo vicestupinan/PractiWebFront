@@ -1,6 +1,6 @@
 import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { Estudiante } from '../models/estudiante';
 
 @Injectable({
@@ -9,6 +9,8 @@ import { Estudiante } from '../models/estudiante';
 export class EstudianteService {
 
   estudianteURL = 'http://localhost:8080/estudiante/'
+
+  private _refresh$ = new Subject<void>();
 
   constructor(private httpClient: HttpClient) { }
 
@@ -27,6 +29,16 @@ export class EstudianteService {
 		});
 	
 		return this.httpClient.request(req);
+  }
+
+  public guardarEstudiante(estudiante: any) {
+    return this.httpClient.post(this.estudianteURL + 'actu', estudiante).pipe(tap(() => {
+      this._refresh$.next();
+    }))
+  }
+
+  get refresh$(){
+    return this._refresh$;
   }
 
 }

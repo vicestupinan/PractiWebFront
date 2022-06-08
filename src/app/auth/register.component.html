@@ -26,7 +26,7 @@
       <label for="validationCustom06" class="form-label fw-bold">Rol</label>
       <select class="form-select" [(ngModel)]="rol" name="rol" id="validationCustom06" required>
         <option>Seleccionar...</option>
-        <option [ngValue]="item.rolNombre" *ngFor="let item of roles">{{item.rolNombre}}</option>
+        <option [ngValue]="item" *ngFor="let item of roles">{{item.rolNombre}}</option>
       </select>
     </div>
     <div class="col-md-4">

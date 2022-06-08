@@ -1,6 +1,6 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Estudiante } from '../models/estudiante';
 import { EstudianteService } from '../services/estudiante.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -23,6 +23,7 @@ export class StudentsComponent implements OnInit {
   motivo = "";
   observaciones = "";
   encargado = "";
+  suscription: Subscription;
 
   estudianteForm : FormGroup;
   selectedFiles?: FileList;
@@ -50,6 +51,10 @@ export class StudentsComponent implements OnInit {
       observaciones: [''],
       encargado: [''],
     });
+
+    this.suscription = this.estudianteService.refresh$.subscribe(() =>{
+      this.cargarEstudiantes();
+    })
   }
 
   cargarEstudiantes(): void {
@@ -108,12 +113,6 @@ export class StudentsComponent implements OnInit {
 
   update(estudiante: Estudiante){
 
-    if(estudiante.aprobacion==false){
-      this.aprobacion = "No aprobado";
-    }else{
-      this.aprobacion = "Aprobado";
-    }
-
     if(estudiante.motivo===null){
       this.motivo = "No aprobado";
     }else{
@@ -139,11 +138,22 @@ export class StudentsComponent implements OnInit {
       codigo: estudiante.codigo,
       correo: estudiante.correo,
       periodoAspira: estudiante.periodoAspira,
-      aprobacion: this.aprobacion,
+      aprobacion: estudiante.aprobacion,
       motivo: this.motivo,
       observaciones: this.observaciones,
       encargado: this.encargado,
     })
   }
+
+  save = (): void => {
+    this.estudianteService.guardarEstudiante(this.estudianteForm.value).subscribe(
+      (resp) => {
+        this.estudianteForm.reset();
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  };
 
 }
